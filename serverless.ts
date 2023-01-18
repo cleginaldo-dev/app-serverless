@@ -1,6 +1,5 @@
 import type { AWS } from '@serverless/typescript';
 
-
 const serverlessConfiguration: AWS = {
   service: 'certificate-generate',
   frameworkVersion: '3',
@@ -18,21 +17,21 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { 
+  functions: {
     hello: {
-      handler: "src/functions/hello.handler",
+      handler: 'src/functions/hello.handler',
       events: [
         {
           http: {
-            path: "hello",
-            method: "get",
+            path: 'hello',
+            method: 'get',
 
             cors: true,
           },
         },
       ],
     },
-   },
+  },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -44,6 +43,32 @@ const serverlessConfiguration: AWS = {
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,
+    },
+  },
+  resources: {
+    Resources: {
+      dbCertificateUsers: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: 'users_certificate',
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 5,
+            WriteCapacityUnits: 5,
+          },
+          AttributeDefinitions: [
+            {
+              AttributeName: 'id',
+              AttributeType: 'S',
+            },
+          ],
+          KeySchema: [
+            {
+              AttributeName: 'id',
+              KeyType: 'HASH',
+            },
+          ],
+        },
+      },
     },
   },
 };
