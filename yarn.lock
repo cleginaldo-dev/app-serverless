@@ -1671,25 +1671,9 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-aws-sdk@^2.1280.0, aws-sdk@^2.7.0:
+aws-sdk@^2.1280.0, aws-sdk@^2.1296.0, aws-sdk@^2.7.0:
   version "2.1296.0"
   resolved "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.1296.0.tgz"
-  integrity sha512-6Nm6zQexyne8lVy+BW8jklGpS36mXJjq67zlsn5XuyB3+qAMlolzar9nxgtuabvb/tSQTP4RSwlhkVzOct+MvA==
-  dependencies:
-    buffer "4.9.2"
-    events "1.1.1"
-    ieee754 "1.1.13"
-    jmespath "0.16.0"
-    querystring "0.2.0"
-    sax "1.2.1"
-    url "0.10.3"
-    util "^0.12.4"
-    uuid "8.0.0"
-    xml2js "0.4.19"
-
-aws-sdk@^2.1296.0:
-  version "2.1296.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1296.0.tgz#5194b3856874938bc6c682dfdb7aa276e7a8e6e9"
   integrity sha512-6Nm6zQexyne8lVy+BW8jklGpS36mXJjq67zlsn5XuyB3+qAMlolzar9nxgtuabvb/tSQTP4RSwlhkVzOct+MvA==
   dependencies:
     buffer "4.9.2"
@@ -5212,7 +5196,7 @@ semver@^7.3.5, semver@^7.3.7, semver@^7.3.8:
 
 serverless-dynamodb-local@^0.2.40:
   version "0.2.40"
-  resolved "https://registry.npmjs.org/serverless-dynamodb-local/-/serverless-dynamodb-local-0.2.40.tgz"
+  resolved "https://registry.yarnpkg.com/serverless-dynamodb-local/-/serverless-dynamodb-local-0.2.40.tgz#1c97f678244bfb581e5850d6d43335d3131b59ee"
   integrity sha512-8wPtFxeJnRKTN3u8x1jG7Cs5VlkO0GkUPfb+DCKIDzjGM5n+qjHXoVsr4YZ/TPwET9kMUgH1Jv39oaEyeSJvYQ==
   dependencies:
     aws-sdk "^2.7.0"
