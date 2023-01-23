@@ -53,7 +53,7 @@ export const handler: APIGatewayProxyHandler = async event => {
           id,
           name,
           grade,
-          created_at: new Date().getTime(),
+          created_at: 1609459200,
         },
       })
       .promise();
@@ -65,7 +65,7 @@ export const handler: APIGatewayProxyHandler = async event => {
   const data: ITemplate = {
     name,
     id,
-    date: dayjs().format('DD/MM/YYYY'),
+    date: dayjs(1671933959143).format('DD/MM/YYYY'),
     grade,
     medal,
   };
@@ -96,7 +96,7 @@ export const handler: APIGatewayProxyHandler = async event => {
 
   await s3
     .putObject({
-      Bucket: 'certificatereactjsqueroserdev',
+      Bucket: 'generator-certificate',
       Key: `${id}.pdf`,
       ACL: 'public-read',
       Body: pdf,
@@ -108,7 +108,7 @@ export const handler: APIGatewayProxyHandler = async event => {
     statusCode: 201,
     body: JSON.stringify({
       message: 'Certificado criado com sucesso!',
-      url: `https://certificatereactjsqueroserdev.s3.amazonaws.com/${id}.pdf`,
+      url: `https://generator-certificate.s3.amazonaws.com/${id}.pdf`,
     }),
   };
 };
