@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { S3 } from 'aws-sdk';
 import chromium from 'chrome-aws-lambda';
@@ -7,9 +8,10 @@ import { compile } from 'handlebars';
 import { join } from 'path';
 
 import { document } from '../utils/dynamodbClient';
+import { UuidV4 } from '../utils/random-uuid';
 
 interface ICreateCertificate {
-  id: string;
+  id?: string;
   name: string;
   grade: string;
 }
@@ -31,32 +33,36 @@ const compileTemplate = async (data: ITemplate) => {
 };
 
 export const handler: APIGatewayProxyHandler = async event => {
-  const { id, name, grade } = JSON.parse(event.body) as ICreateCertificate;
+  let { id, name, grade } = JSON.parse(event.body) as ICreateCertificate;
 
-  const response = await document
-    .query({
-      TableName: 'users_certificate',
-      KeyConditionExpression: 'id = :id',
-      ExpressionAttributeValues: {
-        ':id': id,
-      },
-    })
-    .promise();
-
-  const userAlreadyExits = response.Items[0];
-
-  if (!userAlreadyExits) {
-    await document
-      .put({
+  if (id) {
+    const response = await document
+      .query({
         TableName: 'users_certificate',
-        Item: {
-          id,
-          name,
-          grade,
-          created_at: 1609459200,
+        KeyConditionExpression: 'id = :id',
+        ExpressionAttributeValues: {
+          ':id': id,
         },
       })
       .promise();
+
+    const userAlreadyExits = response.Items[0];
+
+    if (!userAlreadyExits) {
+      await document
+        .put({
+          TableName: 'users_certificate',
+          Item: {
+            id,
+            name,
+            grade,
+            created_at: 1609459200,
+          },
+        })
+        .promise();
+    }
+  } else {
+    id = UuidV4();
   }
 
   const medalPath = join(process.cwd(), 'src', 'templates', 'selo.png');
