@@ -20,25 +20,27 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
-    lambdaHashingVersion: '20201221',
-    iamRoleStatements: [
-      {
-        Effect: 'Allow',
-        Action: ['dynamodb:*'],
-        Resource: ['*'],
+    iam: {
+      role: {
+        statements: [
+          {
+            Effect: 'Allow',
+            Action: ['dynamodb:*'],
+            Resource: ['*'],
+          },
+          {
+            Effect: 'Allow',
+            Action: ['s3:*'],
+            Resource: ['*'],
+          },
+        ],
       },
-      {
-        Effect: 'Allow',
-        Action: ['s3:*'],
-        Resource: ['*'],
-      },
-    ],
+    },
   },
   package: {
     individually: false,
-    include: ['./src/templates/**'],
+    patterns: ['src/**', '!node_modules/**', '!uploads/**'],
   },
-  // import the function via paths
   functions: {
     generateCertificate: {
       handler: 'src/functions/generateCertificate.handler',
