@@ -1,7 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
 const serverlessConfiguration: AWS = {
-  service: 'certificate-generate',
+  service: 'generator-certificate',
   frameworkVersion: '3',
   plugins: [
     'serverless-esbuild',
@@ -20,27 +20,25 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
-    iam: {
-      role: {
-        statements: [
-          {
-            Effect: 'Allow',
-            Action: ['dynamodb:*'],
-            Resource: ['*'],
-          },
-          {
-            Effect: 'Allow',
-            Action: ['s3:*'],
-            Resource: ['*'],
-          },
-        ],
+    lambdaHashingVersion: '20201221',
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: ['dynamodb:*'],
+        Resource: ['*'],
       },
-    },
+      {
+        Effect: 'Allow',
+        Action: ['s3:*'],
+        Resource: ['*'],
+      },
+    ],
   },
   package: {
     individually: false,
-    patterns: ['./src/templates/**'],
+    include: ['./src/templates/**'],
   },
+  // import the function via paths
   functions: {
     generateCertificate: {
       handler: 'src/functions/generateCertificate.handler',
