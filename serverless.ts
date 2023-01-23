@@ -39,7 +39,7 @@ const serverlessConfiguration: AWS = {
   },
   package: {
     individually: false,
-    include: ['./src/templates/**'],
+    patterns: ['./src/templates/**'],
   },
   functions: {
     generateCertificate: {
